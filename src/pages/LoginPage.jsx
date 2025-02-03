@@ -104,6 +104,17 @@ function LoginPage() {
             Login
           </Button>
         </Box>
+        <Typography variant="body2" sx={{ marginTop: 2 }}>
+          Don't have an account?
+        </Typography>
+        <Button
+          variant="text"
+          color="primary"
+          onClick={() => navigate("/signup")}
+          sx={{ marginTop: 1 }}
+        >
+          Sign Up
+        </Button>
       </Paper>
     </Container>
   );

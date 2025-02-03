@@ -108,7 +108,7 @@ function Sidebar() {
               <div className="sidebar-link-text font-smaller">Settings</div>
             </Link>
 
-            <Link
+            {/* <Link
               className={`sidebar-link d-flex flex-direction-col aic pad-1 link-deco-none font-color-200 ${
                 isActive("/help") ? "active" : ""
               }`}
@@ -118,7 +118,7 @@ function Sidebar() {
                 <QuestionMarkIcon />
               </div>
               <div className="sidebar-link-text font-smaller">Help</div>
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>

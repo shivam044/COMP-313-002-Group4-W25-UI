@@ -18,7 +18,7 @@ function SignupPage() {
     setSuccessMessage("");
 
     try {
-      const response = await axios.post("http://localhost:3001/api/auth/signup", {
+      const response = await axios.post("http://localhost:3001/api/user", {
         userName,
         firstName,
         lastName,

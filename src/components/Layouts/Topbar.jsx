@@ -65,7 +65,7 @@ function DashboardPage() {
 
   const handleSignOut = () => {
     localStorage.removeItem("token");
-    navigate("/login");
+    navigate("/");
   };
 
   const handleMarkAsRead = async (notificationId) => {
@@ -89,7 +89,7 @@ function DashboardPage() {
           <img src={Logo} alt="Logo" />
         </div>
         <div className="topbar-right-section d-flex jce aic flex-1 gap-2">
-          <div className="searchbar-container">
+          {/* <div className="searchbar-container">
             <div className="searchbar-wrapper d-flex aic jcc pad-x-2">
               <input
                 type="search"
@@ -98,7 +98,7 @@ function DashboardPage() {
               />
               <SearchIcon className="font-color-200" />
             </div>
-          </div>
+          </div> */}
           <div className="topbar-icons-container">
             <div className="topbar-icons-wrapper d-flex gap-1">
               <div
@@ -212,11 +212,7 @@ function DashboardPage() {
                     {decodedToken?.name || "User"}
                   </Typography>
                   <List>
-                    <ListItem disablePadding>
-                      <ListItemButton component={Link} to="/profile" sx={{ p: "var(--spacing-1)" }}>
-                        <SettingsIcon sx={{ mr: 1 }} /> Profile
-                      </ListItemButton>
-                    </ListItem>
+
                     <ListItem disablePadding>
                       <ListItemButton component={Link} to="/settings" sx={{ p: "var(--spacing-1)" }}>
                         <SettingsIcon sx={{ mr: 1 }} /> Settings
