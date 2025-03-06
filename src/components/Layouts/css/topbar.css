@@ -1,0 +1,26 @@
+.searchbar-wrapper {
+  background-color: var(--bg-200);
+  border-radius: 100px;
+}
+
+.searchbar-wrapper input {
+  border: none;
+  outline: none;
+  height: 50px;
+  background-color: transparent;
+}
+
+@media screen and (max-width: 720px) {
+  .searchbar-wrapper {
+    width: 50px;
+    height: 50px;
+  }
+
+  .topbar {
+    padding: var(--spacing-2) !important;
+  }
+
+  .searchbar-wrapper input {
+    display: none;
+  }
+}

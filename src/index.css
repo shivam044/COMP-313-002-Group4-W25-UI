@@ -3,66 +3,91 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Colors */
+  --primary-100: #d4eaf7;
+  --primary-200: #b6ccd8;
+  --primary-300: #3b3c3d;
+  --accent-100: #71c4ef;
+  --accent-200: #00668c;
+  --text-100: #1d1c1c;
+  --text-200: #313d44;
+  --bg-100: #fffefb;
+  --bg-200: #f5f4f1;
+  --bg-300: #cccbc8;
+
+  /* Spacing */
+  --spacing-0-5: 5px;
+  --spacing-1: 10px;
+  --spacing-2: 20px;
+  --spacing-3: 30px;
+  --spacing-4: 40px;
+  --spacing-5: 50px;
+  --spacing-6: 60px;
+  --spacing-7: 70px;
+  --spacing-8: 80px;
+  --spacing-9: 90px;
+  --spacing-10: 100px;
+
+  /* Font Size */
+  --largest: 1.5rem;
+  --larger: 1.3rem;
+  --large: 1.1rem;
+  --normal: 1rem;
+  --small: 0.9rem;
+  --smaller: 0.7rem;
+  --smallest: 0.6rem;
+
+  /* Font Weight */
+  --font-weight-thin: 500;
+  --font-weight-normal: 500;
+  --font-weight-thick: 600;
+  --font-weight-thicker: 800;
+  --font-weight-thickest: 900;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  background-color: var(--bg-100);
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.masonry-grid {
+  padding: 20px;
+  column-count: 4;
+  column-gap: 20px;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.masonry-item {
+  border-radius: 5px;
+  margin-bottom: 20px;
+  break-inside: avoid;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+@media screen and (max-width: 1024px) {
+  .masonry-grid {
+    column-count: 3;
   }
-  a:hover {
-    color: #747bff;
+}
+
+@media screen and (max-width: 768px) {
+  .masonry-grid {
+    column-count: 2;
   }
-  button {
-    background-color: #f9f9f9;
+}
+
+@media screen and (max-width: 550px) {
+  .masonry-grid {
+    column-count: 1;
+    padding: 0;
+    column-gap: 0;
   }
 }

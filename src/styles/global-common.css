@@ -1,0 +1,109 @@
+/* Block */
+.d-block {display: block;}
+
+/* None */
+.d-none {display: none;}
+
+/* Flex Common CSS */
+.d-flex { display: flex; }
+.d-inline-flex { display: inline-flex; }
+.flex-direction-col { flex-direction: column; }
+.flex-direction-col-rev { flex-direction: column-reverse; }
+.flex-direction-row { flex-direction: row; }
+.flex-direction-row-rev { flex-direction: row-reverse; }
+.jcs { justify-content: start; }
+.jcc { justify-content: center; }
+.jcsb { justify-content: space-between; }
+.jcsa { justify-content: space-around; }
+.jcse { justify-content: space-evenly; }
+.jce { justify-content: end; }
+.ais { align-items: start; }
+.aic { align-items: center; }
+.aie { align-items: end; }
+.gap-0-5 { gap: 5px; }
+.gap-1 { gap: 10px; }
+.gap-2 { gap: 20px; }
+.gap-3 { gap: 30px; }
+.gap-4 { gap: 40px; }
+.gap-5 { gap: 50px; }
+.gap-6 { gap: 60px; }
+.gap-7 { gap: 70px; }
+.gap-8 { gap: 80px; }
+.gap-9 { gap: 90px; }
+.gap-10 { gap: 100px; }
+.gap-r-0-5 { row-gap: 5px; }
+.gap-r-1 { row-gap: 10px; }
+.gap-r-2 { row-gap: 20px; }
+.gap-r-3 { row-gap: 30px; }
+.gap-r-4 { row-gap: 40px; }
+.gap-r-5 { row-gap: 50px; }
+.gap-r-6 { row-gap: 60px; }
+.gap-r-7 { row-gap: 70px; }
+.gap-r-8 { row-gap: 80px; }
+.gap-r-9 { row-gap: 90px; }
+.gap-r-10 { row-gap: 100px; }
+.gap-c-0-5 { column-gap: 5px; }
+.gap-c-1 { column-gap: 10px; }
+.gap-c-2 { column-gap: 20px; }
+.gap-c-3 { column-gap: 30px; }
+.gap-c-4 { column-gap: 40px; }
+.gap-c-5 { column-gap: 50px; }
+.gap-c-6 { column-gap: 60px; }
+.gap-c-7 { column-gap: 70px; }
+.gap-c-8 { column-gap: 80px; }
+.gap-c-9 { column-gap: 90px; }
+.gap-c-10 { column-gap: 100px; }
+.flex-1 { flex: 1; }
+.flex-2 { flex: 2; }
+
+/* Width */
+.w-100 { width: 100%!important}
+.w-75 { width: 75%}
+.w-50 { width: 50%}
+.w-25 { width: 25%}
+.w-0 { width: 0%}
+
+/* Height */
+.h-100 { height: 100%}
+.h-75 { height: 75%}
+.h-50 { height: 50%}
+.h-25 { height: 25%}
+.h-0 { height: 0%}
+
+/* Link Common CSS */
+.link-deco-none { text-decoration: none; }
+
+/* Scrollbar Common CSS */
+.no-scroll-bar::-webkit-scrollbar { display: none; }
+
+/* Cursor Pointer */
+.cur-point { cursor: pointer; }
+
+/* Text */
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-justify { text-align: justify; }
+
+.text-black { color: #000; }
+.text-white { color: #fff; }
+
+.text-cut {text-decoration: line-through;}
+
+/* Font style */
+.font-style-italic { font-style: italic; }
+
+.user-select-none {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+
+.overflow-hidden { overflow: hidden; }
+.overflow-scroll { overflow: scroll; }
+
+.overflow-x-hidden { overflow-x: hidden; }
+.overflow-x-scroll { overflow-x: scroll; }
+
+.overflow-y-hidden { overflow-y: hidden; }
+.overflow-y-scroll { overflow-y: scroll; }

@@ -1,42 +1,52 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
+/* App.css */
+
+.app-body {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  grid-template-rows: auto 1fr;
+  height: 100vh;
+}
+
+.topbar-container {
+  grid-column: 1 / 3;
+}
+
+.main-container {
+  border-top-left-radius: 30px;
+  padding: 20px;
+  background-color: var(--bg-200);
+  box-shadow: -2px 0 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+
+/* Login page styling */
+.login-page {
+  background-color: #f0f2f5;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* Optional styling for MUI Paper component in login page */
+.login-page .MuiPaper-root {
+  max-width: 400px;
   padding: 2rem;
   text-align: center;
+  border-radius: 8px;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Responsive layout adjustments */
+@media screen and (max-width: 720px) {
+  .app-body {
+    display: block;
   }
-  to {
-    transform: rotate(360deg);
+
+  .main-container {
+    padding: 20px !important;
   }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }

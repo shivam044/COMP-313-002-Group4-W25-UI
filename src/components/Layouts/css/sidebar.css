@@ -1,0 +1,22 @@
+.sidebar-link {
+  border-radius: 10px;
+}
+
+.sidebar-link:hover {
+  background: var(--bg-200);
+}
+
+.sidebar-link.active {
+  background: var(--primary-100);
+}
+
+@media screen and (max-width: 720px) {
+  .sidebar-links-wrapper {
+    padding-top: 0 !important;
+    flex-direction: row !important;
+  }
+
+  .sidebar-link {
+    width: 80px;
+  }
+}

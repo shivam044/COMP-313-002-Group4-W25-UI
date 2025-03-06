@@ -22,3 +22,44 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Node.js dependencies
+/node_modules
+/package-lock.json
+/yarn.lock
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Runtime data
+/pids
+*.pid
+*.pid.lock
+
+# dotenv environment variables
+.env
+
+# Editor directories and files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Next.js build output (if used)
+.next/
+
+# TypeScript
+*.tsbuildinfo
+
+# Temporary files
+*.swp
+.vscode/
+.history/
+.env
