@@ -1,18 +1,23 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 
-import LoginForm from "./components/Auth/LoginForm"
+import LoginForm from "./components/Auth/LoginForm";
 import SubjectsPage from "./pages/SubjectsPage";
 import SignupPage from "./components/Auth/SignupForm";
-import DashboardPage from "./pages/DashboardPage";
 import Dashboard from "./components/Dashboard/Dashboard";
 import ProfilePage from "./pages/ProfilePage";
-import GradesPage from "./pages/GradeTrackingPage";
+
 import AssignmentPage from "./pages/AssignmentPage";
 import AgendaPage from "./pages/AgendaPage";
 import Grades from "./components/Grades/GradeList";
 import SettingsPage from "./pages/SettingsPage";
 import HelpPage from "./pages/HelpPage";
+
+import FeedbackPage from "./pages/FeedbackPage";
+import StudentPerformancePage from "./components/Feedback/StudentPerformancePage";
+import AdminUserManagement from "./components/Admin/AdminUserManagement"
+import AdminSystemAnalytics from "./components/Admin/AdminSystemAnalytics";
+import PoliciesSettingsPage from "./components/Admin/PoliciesSettingsPage";
 
 import Sidebar from "./components/Layouts/Sidebar";
 import Topbar from "./components/Layouts/Topbar";
@@ -48,8 +53,6 @@ function Layout({ children }) {
 }
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <Layout>
@@ -60,7 +63,6 @@ function App() {
           <Route path="/semesters" element={<SemestersPage />} />
           <Route path="/signup" element={<SignupPage />} />
 
-          
           {/* Protect the routes by wrapping them in ProtectedRoute */}
           <Route
             path="/dashboard"
@@ -81,6 +83,36 @@ function App() {
           <Route path="/assignments" element={<AssignmentPage />} />
           <Route path="/agenda" element={<AgendaPage />} />
           <Route path="/subjects" element={<SubjectsPage />} />
+          <Route path="/feedback" element={<FeedbackPage />} />
+          <Route path="/student/:studentId/performance" element={<StudentPerformancePage />} />
+          
+          {/* New Admin User Management Route */}
+          <Route
+            path="/admin/users"
+            element={
+              <ProtectedRoute>
+                <AdminUserManagement />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/stats"
+            element={
+              <ProtectedRoute>
+                <AdminSystemAnalytics />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/policy"
+            element={
+              <ProtectedRoute>
+                <PoliciesSettingsPage />
+              </ProtectedRoute>
+            }
+          />
+
           <Route
             path="/profile"
             element={

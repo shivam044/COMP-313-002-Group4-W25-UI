@@ -25,6 +25,9 @@ import {
 import IconButton from "@mui/material/IconButton";
 import AddIcon from "@mui/icons-material/Add";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import CommentIcon from '@mui/icons-material/Comment';
+import { getFeedbackByAssignment, getFeedbackBySubject } from "../api/feedback";
+import FeedbackModal from "../components/Feedback/FeedbackModal";
 import {
   createGrade,
   getAllGrades,
@@ -41,6 +44,7 @@ import {
 import decodeToken from "../helpers/decodeToken";
 
 function GradesPage() {
+  const token = localStorage.getItem("token");
   const [loading, setLoading] = useState(true);
   const [subjects, setSubjects] = useState([]);
   const [assignmentsList, setAssignmentsList] = useState([]);
@@ -60,8 +64,50 @@ function GradesPage() {
   const [editMode, setEditMode] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [gradeToEdit, setGradeToEdit] = useState(null);
+  const [feedbackData, setFeedbackData] = useState({
+    subjects: {},
+    assignments: {}
+  });
+  
+  const [feedbackModal, setFeedbackModal] = useState({
+    open: false,
+    entityId: null,
+    entityName: "",
+    entityType: "",
+    items: [],
+    loading: false
+  });
 
-  const token = localStorage.getItem("token");
+  const handleOpenFeedbackModal = (entityId, entityType, entityName) => {
+    let feedbackItems = [];
+    
+    // Get feedback from the already-loaded feedback data
+    if (entityType === "subject" && feedbackData.subjects) {
+      feedbackItems = feedbackData.subjects[entityId] || [];
+    } else if (entityType === "assignment" && feedbackData.assignments) {
+      feedbackItems = feedbackData.assignments[entityId] || [];
+    }
+    
+    setFeedbackModal({
+      open: true,
+      entityId,
+      entityName,
+      entityType,
+      items: feedbackItems,
+      loading: false
+    });
+  };
+  
+  const handleCloseFeedbackModal = () => {
+    setFeedbackModal({
+      open: false,
+      entityId: null,
+      entityName: "",
+      entityType: "",
+      items: [],
+      loading: false
+    });
+  };
 
   useEffect(() => {
     fetchSubjectsAndAssignmentsAndGrades();
@@ -78,6 +124,7 @@ function GradesPage() {
         getAssignmentsByUser(userId),
         getGradesByUser(userId),
       ]);
+
 
       const updatedSubjects = subjects.map((subject) => {
         const filteredAssignments = assignments.filter(
@@ -121,11 +168,63 @@ function GradesPage() {
       });
 
       setAssignmentsList(updatedAssignmentList);
+      await fetchFeedbackData(updatedSubjects, updatedAssignmentList);
     } catch (error) {
       console.error("Error fetching data:", error);
       showSnackbar("Failed to fetch data.", "error");
     } finally {
       setLoading(false);
+    }
+  };
+
+  
+  const fetchFeedbackData = async (subjectsList, assignmentsList) => {
+    try {
+      // Ensure we have subjects and assignments before proceeding
+      if (!subjectsList.length || !assignmentsList.length) {
+        console.log("No subjects or assignments loaded yet, skipping feedback fetch");
+        return;
+      }
+      
+      // Fetch feedback for each subject
+      const subjectFeedbackMap = {};
+      for (const subject of subjectsList) {
+        if (!subject || !subject._id) continue; // Skip if subject is invalid
+        
+        try {
+          const feedback = await getFeedbackBySubject(subject._id);
+          subjectFeedbackMap[subject._id] = feedback || [];
+        } catch (subjectError) {
+          console.error(`Error fetching feedback for subject ${subject._id}:`, subjectError);
+          subjectFeedbackMap[subject._id] = []; // Initialize with empty array on error
+        }
+      }
+      
+      // Fetch feedback for each assignment
+      const assignmentFeedbackMap = {};
+      for (const assignment of assignmentsList) {
+        if (!assignment || !assignment._id) continue; // Skip if assignment is invalid
+        
+        try {
+          const feedback = await getFeedbackByAssignment(assignment._id);
+          assignmentFeedbackMap[assignment._id] = feedback || [];
+        } catch (assignmentError) {
+          console.error(`Error fetching feedback for assignment ${assignment._id}:`, assignmentError);
+          assignmentFeedbackMap[assignment._id] = []; // Initialize with empty array on error
+        }
+      }
+      
+      setFeedbackData({
+        subjects: subjectFeedbackMap,
+        assignments: assignmentFeedbackMap
+      });
+    } catch (error) {
+      console.error("Error fetching feedback data:", error);
+      // Initialize with empty objects on overall error
+      setFeedbackData({
+        subjects: {},
+        assignments: {}
+      });
     }
   };
 
@@ -235,6 +334,26 @@ function GradesPage() {
               <Typography variant="h6" sx={{ fontSize: "var(--normal)" }}>
                 {subject.subjectTitle}
               </Typography>
+
+                {/* Add Feedback Button */}
+                <Button 
+                  variant="text" 
+                  color="primary"
+                  size="small"
+                  onClick={() => handleOpenFeedbackModal(
+                    subject._id, 
+                    "subject", 
+                    subject.subjectTitle
+                  )}
+                  startIcon={<CommentIcon />}
+                >
+                  Feedback
+                  {feedbackData.subjects && 
+                  feedbackData.subjects[subject._id] && 
+                  feedbackData.subjects[subject._id].length > 0 && 
+                  ` (${feedbackData.subjects[subject._id].length})`}
+                </Button>  
+
               <Box
                 sx={{
                   fontSize: "var(--small)",
@@ -524,6 +643,25 @@ function GradesPage() {
                                 </Box>
                               )}
                             </TableCell>
+                            <TableCell>
+                              <Button
+                                variant="text"
+                                color="primary"
+                                size="small"
+                                onClick={() => handleOpenFeedbackModal(
+                                  assignment._id,
+                                  "assignment",
+                                  assignment.name
+                                )}
+                              >
+                                View
+                                {feedbackData.assignments && 
+                                feedbackData.assignments[assignment._id] && 
+                                feedbackData.assignments[assignment._id].length > 0 && 
+                                ` (${feedbackData.assignments[assignment._id].length})`}
+                              </Button>
+                            </TableCell>
+
                           </TableRow>
                         )
                       )}
@@ -539,7 +677,15 @@ function GradesPage() {
           </Box>
         ))}
       </Box>
-
+      {/* Feedback Modal */}
+      <FeedbackModal
+        open={feedbackModal.open}
+        onClose={handleCloseFeedbackModal}
+        feedbackItems={feedbackModal.items}
+        entityName={feedbackModal.entityName}
+        entityType={feedbackModal.entityType}
+        loading={feedbackModal.loading}
+      />
       <Dialog
         open={dialogOpen}
         onClose={() => setDialogOpen(false)}
