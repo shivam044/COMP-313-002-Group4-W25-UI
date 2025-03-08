@@ -29,6 +29,7 @@ import {
 } from "../api/assignment";
 import { getSubjectsByUser } from "../api/subject";
 import decodeToken from "../helpers/decodeToken";
+import { registerPushNotifications } from "../helpers/PushNotification";
 
 function AssignmentsPage() {
   const [assignmentsList, setAssignmentsList] = useState([]);
@@ -132,7 +133,31 @@ function AssignmentsPage() {
           severity: "success",
         });
       } else {
-        const newAssignmentResponse = await createAssignment(updatedAssignmentData);
+        const newAssignmentResponse = await createAssignment(
+          updatedAssignmentData
+        );
+
+        // First, parse the ISO string while keeping it in UTC
+        let originalDate = new Date(updatedAssignmentData.due_date);
+
+        // Create a date string with just the date part in local time
+        const localDateString = originalDate.toISOString().split("T")[0]; // Gets "2025-03-08"
+
+        // Now create a new date using that date string and current local time
+        let now = new Date();
+        originalDate = new Date(
+          `${localDateString}T${now.getHours()}:${
+            now.getMinutes() + 1
+          }:${now.getSeconds()}`
+        );
+
+        console.log(originalDate);
+
+        registerPushNotifications(
+          originalDate,
+          newAssignmentResponse.name + " is due soon: " + originalDate
+        );
+
         setAssignmentsList((prevList) => [...prevList, newAssignmentResponse]);
         setSnackbar({
           open: true,
@@ -142,7 +167,11 @@ function AssignmentsPage() {
       }
 
       setDialogOpen(false);
-      setNewAssignment({ name: "", s_id: "", due_date: new Date().toISOString().split("T")[0] });
+      setNewAssignment({
+        name: "",
+        s_id: "",
+        due_date: new Date().toISOString().split("T")[0],
+      });
       setEditMode(false);
       setAssignmentToEdit(null);
     } catch (error) {
@@ -167,7 +196,8 @@ function AssignmentsPage() {
   };
 
   const handleDelete = async (assignmentId) => {
-    if (!window.confirm("Are you sure you want to delete this assignment?")) return;
+    if (!window.confirm("Are you sure you want to delete this assignment?"))
+      return;
 
     try {
       await deleteAssignment(assignmentId);
@@ -200,7 +230,11 @@ function AssignmentsPage() {
         color="primary"
         onClick={() => {
           setDialogOpen(true);
-          setNewAssignment({ name: "", s_id: newAssignment.s_id, due_date: new Date().toISOString().split("T")[0] });
+          setNewAssignment({
+            name: "",
+            s_id: newAssignment.s_id,
+            due_date: new Date().toISOString().split("T")[0],
+          });
           setEditMode(false);
           setAssignmentToEdit(null);
         }}
